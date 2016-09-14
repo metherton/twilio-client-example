@@ -16,7 +16,8 @@ Generate a Capability Token for a Twilio Client user - it generates a random
 username for the client requesting a token.
 */
 app.get('/token', function(request, response) {
-  var identity = randomUsername();
+  //var identity = randomUsername();
+  var identity = 'martino';
 
   var capability = new twilio.Capability(config.TWILIO_ACCOUNT_SID,
     config.TWILIO_AUTH_TOKEN);
@@ -67,7 +68,7 @@ app.post('/redirect', function (req, res) {
       // wrap the phone number or client name in the appropriate TwiML verb
       // by checking if the number given has only digits and format symbols
 
-        this.client('WickedRoddyGunsight');
+        this.client('martino');
 
     });
  // } else {
