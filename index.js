@@ -17,7 +17,7 @@ username for the client requesting a token.
 */
 app.get('/token', function(request, response) {
   var identity = randomUsername();
-  
+
   var capability = new twilio.Capability(config.TWILIO_ACCOUNT_SID,
     config.TWILIO_AUTH_TOKEN);
   capability.allowClientOutgoing(config.TWILIO_TWIML_APP_SID);
@@ -34,7 +34,9 @@ app.get('/token', function(request, response) {
 app.post('/voice', function (req, res) {
   // Create TwiML response
   var twiml = new twilio.TwimlResponse();
-  
+
+  //console.log('post', req);
+
   if(req.body.To) {
     twiml.dial({ callerId: config.TWILIO_CALLER_ID}, function() {
       // wrap the phone number or client name in the appropriate TwiML verb
@@ -46,8 +48,32 @@ app.post('/voice', function (req, res) {
       }
     });
   } else {
+
     twiml.say("Thanks for calling!");
   }
+
+  res.set('Content-Type', 'text/xml');
+  res.send(twiml.toString());
+});
+
+app.post('/redirect', function (req, res) {
+  // Create TwiML response
+  var twiml = new twilio.TwimlResponse();
+
+  //console.log('post', req);
+
+ // if(req.body.To) {
+    twiml.dial({ callerId: config.TWILIO_CALLER_ID}, function() {
+      // wrap the phone number or client name in the appropriate TwiML verb
+      // by checking if the number given has only digits and format symbols
+
+        this.client('WickedRoddyGunsight');
+
+    });
+ // } else {
+
+ //   twiml.say("Thanks for calling!");
+ // }
 
   res.set('Content-Type', 'text/xml');
   res.send(twiml.toString());
